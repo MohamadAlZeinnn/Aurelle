@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getActiveProducts, getProductBySlug, productHref } from "@/lib/product";
-import { getAvailablePaymentMethods } from "@/lib/server/payments";
 import { breadcrumbJsonLd, JsonLd, productJsonLd } from "@/lib/structured-data";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductInformation } from "@/components/product/ProductInformation";
@@ -30,8 +29,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const product = getProductBySlug((await params).slug);
   if (!product) notFound();
 
-  const paymentLabels = getAvailablePaymentMethods().map((m) => m.label);
-
   return (
     <>
       <JsonLd data={productJsonLd(product)} />
@@ -50,7 +47,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
           <div className="container-site lg:col-span-5 lg:px-0">
             <div className="lg:sticky lg:top-28">
-              <ProductInformation product={product} paymentLabels={paymentLabels} />
+              <ProductInformation product={product} />
             </div>
           </div>
         </div>

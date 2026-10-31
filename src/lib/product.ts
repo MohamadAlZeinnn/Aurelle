@@ -1,5 +1,6 @@
 import { products } from "@/data/products";
 import type { ConfigurableAmount, Product } from "@/types/product";
+import { formatUSD } from "@/lib/currency";
 
 export function getActiveProducts(): Product[] {
   return products.filter((p) => p.active);
@@ -27,6 +28,14 @@ export function isPurchasable(product: Product, variantId?: string): boolean {
   if (!product.active || product.availability === "out_of_stock") return false;
   if (variantId) return product.variants.some((v) => v.id === variantId && v.available);
   return product.variants.length === 0 || product.variants.some((v) => v.available);
+}
+
+/** e.g. "Box of 5 · $2.40 per mask" — per-unit price only once the price is confirmed. */
+export function packSummary(product: Product): string | null {
+  const { pack, price } = product;
+  if (!pack) return null;
+  if (price.isPlaceholder || pack.units < 2) return pack.label;
+  return `${pack.label} · ${formatUSD(price.amount / pack.units)} per ${pack.unitName}`;
 }
 
 export const AVAILABILITY_LABEL: Record<Product["availability"], string> = {

@@ -47,7 +47,7 @@ export function ProductGallery({ images, productName }: { images: ProductImage[]
                 src={img.src}
                 alt={img.alt}
                 motif={img.motif}
-                brief={img.brief}
+                brief={img.brief} isPlaceholder={img.isPlaceholder} focus={img.focus} fit={img.fit}
                 tone={TONES[i % TONES.length]}
                 priority={i === 0}
                 sizes="100vw"
@@ -86,7 +86,7 @@ export function ProductGallery({ images, productName }: { images: ProductImage[]
                   active === i ? "opacity-100 ring-1 ring-ink ring-offset-2 ring-offset-ivory" : "opacity-60 hover:opacity-100"
                 }`}
               >
-                <EditorialImage src={img.src} alt="" motif={img.motif} brief={img.brief} tone={TONES[i % TONES.length]} compact sizes="88px" className="absolute inset-0" />
+                <EditorialImage src={img.src} alt="" motif={img.motif} brief={img.brief} isPlaceholder={img.isPlaceholder} focus={img.focus} fit={img.fit} tone={TONES[i % TONES.length]} compact sizes="88px" className="absolute inset-0" />
               </button>
             </li>
           ))}
@@ -105,7 +105,7 @@ export function ProductGallery({ images, productName }: { images: ProductImage[]
                 src={current.src}
                 alt={current.alt}
                 motif={current.motif}
-                brief={current.brief}
+                brief={current.brief} isPlaceholder={current.isPlaceholder} focus={current.focus} fit={current.fit}
                 tone={TONES[active % TONES.length]}
                 priority={active === 0}
                 sizes="(min-width: 1024px) 50vw, 100vw"

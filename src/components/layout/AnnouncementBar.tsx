@@ -28,7 +28,7 @@ export function AnnouncementBar() {
 
   return (
     <div
-      className="relative z-50 flex min-h-9 items-center py-2 justify-center overflow-hidden bg-ink px-4 text-ivory"
+      className="relative z-50 flex min-h-9 items-center justify-center overflow-hidden bg-plum px-4 py-2 text-[#f5efe6]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       role="region"

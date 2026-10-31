@@ -23,12 +23,12 @@ const generalAnswers = {
 };
 
 function paymentAnswer(): string {
-  const methods: string[] = [];
-  if (siteConfig.payments.cashOnDelivery) methods.push("Cash on Delivery, in USD");
-  return methods.length
-    ? `We currently accept ${methods.join(", ")}. Secure online card payment will be added soon — the methods available to you are always shown at checkout.`
-    : "Available payment methods are shown at checkout.";
+  return siteConfig.payments.cashOnDelivery
+    ? "We accept Cash on Delivery, in USD. You pay our courier when your order arrives."
+    : "Payment options are confirmed with you on WhatsApp when you order.";
 }
+
+const orderAnswer = `Tap "Order on WhatsApp" on the product page, or message us at ${siteConfig.ordering.whatsappDisplay}. Your order details are filled in for you — just add your name and delivery address, and our team will confirm everything with you before delivery.`;
 
 export function getFaqs(): FaqItem[] {
   return [
@@ -38,6 +38,7 @@ export function getFaqs(): FaqItem[] {
     { id: "reusable", question: "Is the mask reusable?", answer: spec.reusability },
     { id: "daily", question: "Can I use it every day?", answer: spec.dailyUse },
     { id: "sensitive", question: "Is it suitable for sensitive skin?", answer: spec.sensitiveSkin },
+    { id: "order", question: "How do I place an order?", answer: orderAnswer },
     {
       id: "delivery",
       question: "How long does delivery take in Lebanon?",

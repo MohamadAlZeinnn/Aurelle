@@ -24,7 +24,7 @@ export const policies: Policy[] = [
     body: (
       <>
         <h2>Information we collect</h2>
-        <p>When you place an order, we collect the details needed to deliver it: your name, email address, phone number and delivery address, together with any delivery notes you choose to add.</p>
+        <p>Orders are placed through WhatsApp. When you order, we receive the details you send us in the chat — typically your name, WhatsApp phone number and delivery address, plus any delivery notes — and use them to confirm and deliver your order.</p>
         <p>If you join our mailing list, we store your email address and the date you gave consent. If you contact us, we keep your message so that we can reply.</p>
         <h2>How we use it</h2>
         <ul>
@@ -33,9 +33,9 @@ export const policies: Policy[] = [
           <li>To send our newsletter, only if you have opted in. You can unsubscribe at any time.</li>
         </ul>
         <h2>Sharing</h2>
-        <p>We share delivery details with our delivery partner(s) only as needed to complete your delivery, and with service providers who host our website and data on our behalf. [List providers.] We do not sell your personal information.</p>
+        <p>We share delivery details with our delivery partner(s) only as needed to complete your delivery, and with service providers who host our website and data on our behalf. [List providers.] Order conversations take place on WhatsApp, which is operated by Meta under its own privacy policy. We do not sell your personal information.</p>
         <h2>Your browser</h2>
-        <p>Your shopping bag is stored in your own browser (local storage) so it is still there when you come back. [Describe any analytics or cookies before enabling them.]</p>
+        <p>[Describe any analytics or cookies before enabling them.]</p>
         <h2>Retention & your choices</h2>
         <p>[Set retention periods.] You may ask us to access, correct or delete your personal information by writing to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
       </>
@@ -51,9 +51,9 @@ export const policies: Policy[] = [
         <h2>About us</h2>
         <p>This website is operated by [legal entity name], [registered address], Lebanon.</p>
         <h2>Orders</h2>
-        <p>Placing an order is an offer to purchase. We will confirm your order by phone, message or email. We may decline or cancel an order — for example if an item is unavailable or a price was displayed in error — in which case you will not be charged.</p>
+        <p>Orders are placed by messaging us on WhatsApp at {siteConfig.ordering.whatsappDisplay}. Sending an order is an offer to purchase; your order is accepted once our team confirms it with you on WhatsApp. We may decline or cancel an order — for example if an item is unavailable or a price was displayed in error — in which case you will not be charged.</p>
         <h2>Prices & payment</h2>
-        <p>Prices are shown and charged in US Dollars (USD). Any Lebanese Pound (LBP) amount shown is an indication only. Delivery fees are shown at checkout before you place your order. Available payment methods are shown at checkout.</p>
+        <p>Prices are shown and charged in US Dollars (USD). Any Lebanese Pound (LBP) amount shown is an indication only. The total, including any delivery fee, is confirmed with you on WhatsApp before your order is dispatched. Payment is cash on delivery.</p>
         <h2>Delivery</h2>
         <p>We currently deliver within {siteConfig.market} only. See <a href="/shipping-returns">Shipping &amp; Returns</a>.</p>
         <h2>Product use</h2>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/ui/primitives";
 import { Reveal } from "@/components/ui/Reveal";
 
-const line = { stroke: "#292824", strokeWidth: 1, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+const line = { stroke: "#241c1f", strokeWidth: 1, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
 const MASK = "M8 44 C8 16 46 6 100 15 C154 6 192 16 192 44 C192 72 168 86 136 82 C118 80 110 64 100 64 C90 64 82 80 64 82 C32 86 8 72 8 44 Z";
 
 // Simple line illustrations — no usage details are implied beyond the step titles.
@@ -10,16 +10,16 @@ const illustrations = [
   <svg key="unwrap" viewBox="0 0 200 200" className="h-full w-full" fill="none" aria-hidden>
     <circle cx="100" cy="100" r="82" fill="#eee5dc" />
     <g transform="rotate(-8 100 110)">
-      <rect x="58" y="70" width="84" height="96" fill="#f8f6f1" {...line} />
+      <rect x="58" y="70" width="84" height="96" fill="#f5efe6" {...line} />
       <path d="M58 70 L68 52 H132 L142 70" {...line} strokeDasharray="3 3" />
-      <text x="100" y="125" textAnchor="middle" fontSize="8" letterSpacing="3" fill="#292824" style={{ fontFamily: "var(--font-serif)" }}>
+      <text x="100" y="125" textAnchor="middle" fontSize="8" letterSpacing="3" fill="#241c1f" style={{ fontFamily: "var(--font-serif)" }}>
         AURELLE
       </text>
     </g>
   </svg>,
   <svg key="wear" viewBox="0 0 200 200" className="h-full w-full" fill="none" aria-hidden>
     <circle cx="100" cy="100" r="82" fill="#eee5dc" />
-    <ellipse cx="100" cy="108" rx="44" ry="56" fill="#f8f6f1" {...line} />
+    <ellipse cx="100" cy="108" rx="44" ry="56" fill="#f5efe6" {...line} />
     <g transform="translate(54 72) scale(0.46)">
       <path d={MASK} fill="#e4d4c8" {...line} strokeWidth={2.2} />
     </g>
@@ -27,7 +27,7 @@ const illustrations = [
   </svg>,
   <svg key="unwind" viewBox="0 0 200 200" className="h-full w-full" fill="none" aria-hidden>
     <circle cx="100" cy="100" r="82" fill="#eee5dc" />
-    <path d="M114 58a42 42 0 1 0 26 62A36 36 0 0 1 114 58Z" fill="#f8f6f1" {...line} />
+    <path d="M114 58a42 42 0 1 0 26 62A36 36 0 0 1 114 58Z" fill="#f5efe6" {...line} />
     <path d="M60 150c-4-6 4-9 0-15M72 152c-4-6 4-9 0-15" {...line} opacity="0.5" />
   </svg>,
 ];

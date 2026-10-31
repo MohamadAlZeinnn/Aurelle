@@ -34,7 +34,7 @@ export function Newsletter() {
   }
 
   return (
-    <section aria-labelledby="newsletter-title" className="bg-rose/60 py-[var(--spacing-section)]">
+    <section aria-labelledby="newsletter-title" className="theme-dark py-[var(--spacing-section)]">
       <div className="container-site">
         <div className="mx-auto max-w-2xl text-center">
           <p className="eyebrow">The AURELLE Letter</p>

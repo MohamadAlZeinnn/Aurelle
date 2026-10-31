@@ -1,41 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Check } from "lucide-react";
-import { useCart } from "@/components/cart/CartProvider";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { Price } from "@/components/ui/primitives";
-import { AVAILABILITY_LABEL, getProductById, isPurchasable, resolvePrice } from "@/lib/product";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
+import { AVAILABILITY_LABEL, getProductById, isPurchasable, packSummary, resolvePrice } from "@/lib/product";
+import { orderMessage, whatsappUrl } from "@/lib/whatsapp";
 
 interface Props {
   productId: string;
-  /** "full" = product page (quantity + Buy Now); "compact" = editorial card. */
+  /** "full" = product page (quantity selector + note); "compact" = editorial card. */
   variant?: "full" | "compact";
 }
 
+/** Orders are placed on WhatsApp — the button opens a chat with the selection pre-filled. */
 export function PurchaseControls({ productId, variant = "full" }: Props) {
   const product = getProductById(productId)!;
-  const { add } = useCart();
-  const router = useRouter();
   const firstAvailable = product.variants.find((v) => v.available)?.id;
   const [variantId, setVariantId] = useState<string | undefined>(firstAvailable);
   const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
 
   const price = resolvePrice(product, variantId);
   const purchasable = isPurchasable(product, variantId);
-
-  const addToBag = () => {
-    add(product.id, quantity, variantId);
-    setAdded(true);
-    window.setTimeout(() => setAdded(false), 2200);
-  };
-
-  const buyNow = () => {
-    add(product.id, quantity, variantId);
-    router.push("/checkout");
-  };
+  const variantName = product.variants.find((v) => v.id === variantId)?.name;
+  const pack = packSummary(product);
+  const href = whatsappUrl(orderMessage(product, quantity, variantName));
 
   return (
     <div>
@@ -46,6 +35,7 @@ export function PurchaseControls({ productId, variant = "full" }: Props) {
           {AVAILABILITY_LABEL[product.availability]}
         </span>
       </div>
+      {pack && <p className="mt-2 text-sm text-stone">{pack}</p>}
 
       {product.variants.length > 0 && (
         <fieldset className="mt-7">
@@ -74,30 +64,31 @@ export function PurchaseControls({ productId, variant = "full" }: Props) {
         </fieldset>
       )}
 
-      <div className={`mt-8 flex flex-wrap gap-3 ${variant === "full" ? "" : "items-center"}`}>
+      <div className="mt-8 flex flex-wrap gap-3">
         {variant === "full" && (
           <QuantitySelector value={quantity} onChange={setQuantity} max={product.maxPerOrder} label="Quantity" />
         )}
-        <button type="button" className="btn btn-primary min-w-0 flex-1 sm:min-w-[14rem] sm:flex-none" onClick={addToBag} disabled={!purchasable}>
-          {added ? (
-            <>
-              <Check className="h-3.5 w-3.5" strokeWidth={1.5} /> Added to Bag
-            </>
-          ) : purchasable ? (
-            "Add to Bag"
-          ) : (
-            "Currently Unavailable"
-          )}
-        </button>
-        {variant === "full" && (
-          <button type="button" className="btn btn-secondary w-full" onClick={buyNow} disabled={!purchasable}>
-            Buy Now
+        {purchasable ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary min-w-0 flex-1 sm:min-w-[16rem] sm:flex-none"
+          >
+            <WhatsAppIcon className="h-4 w-4" /> Order on WhatsApp
+            <span className="sr-only">(opens WhatsApp)</span>
+          </a>
+        ) : (
+          <button type="button" className="btn btn-primary min-w-0 flex-1 sm:min-w-[16rem] sm:flex-none" disabled>
+            Currently Unavailable
           </button>
         )}
       </div>
-      <p className="sr-only" aria-live="polite">
-        {added ? `${product.name} added to your bag` : ""}
-      </p>
+      {variant === "full" && purchasable && (
+        <p className="mt-4 text-sm text-stone">
+          Your order is confirmed with our team on WhatsApp. Pay cash on delivery.
+        </p>
+      )}
     </div>
   );
 }

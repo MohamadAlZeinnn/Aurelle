@@ -7,7 +7,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { navigation, siteConfig } from "@/data/site-config";
 import { useDialogBehaviour } from "@/components/layout/useDialogBehaviour";
-import { InstagramIcon, TikTokIcon } from "@/components/ui/SocialIcons";
+import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
+import { generalEnquiryUrl } from "@/lib/whatsapp";
 
 const links = [
   { label: "Shop", href: "/shop" },
@@ -75,6 +76,10 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                   </li>
                 ))}
             </ul>
+            <a href={generalEnquiryUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-10 w-full">
+              <WhatsAppIcon className="h-4 w-4" /> Order on WhatsApp
+            </a>
+            <p className="mt-3 text-center text-sm text-stone">{siteConfig.ordering.whatsappDisplay}</p>
           </nav>
           <div className="container-site flex items-center justify-between border-t border-ink/10 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
             <p className="font-serif text-lg italic text-stone">{siteConfig.tagline}</p>

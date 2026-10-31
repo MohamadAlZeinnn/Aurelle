@@ -6,7 +6,7 @@ import type { PlaceholderMotif } from "@/types/product";
  * cannot be mistaken for real product imagery.
  */
 
-const INK = "#292824";
+const INK = "#241c1f";
 const LINE = { stroke: INK, strokeWidth: 1, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, vectorEffect: "non-scaling-stroke" as const };
 
 /** Eye mask silhouette in a 200×90 box, origin top-left. */
@@ -115,16 +115,62 @@ const motifs: Record<PlaceholderMotif, React.ReactNode> = {
       <path d="M306 308 C302 298 310 292 306 284" {...LINE} strokeOpacity={0.4} />
     </g>
   ),
+  // Evening still-life: the box and a sachet in candlelight, steam rising, a crescent moon.
+  ritual: (
+    <g>
+      <defs>
+        <radialGradient id="ritual-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#e2a273" stopOpacity="0.55" />
+          <stop offset="55%" stopColor="#c27a4a" stopOpacity="0.16" />
+          <stop offset="100%" stopColor="#c27a4a" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <circle cx="190" cy="270" r="210" fill="url(#ritual-glow)" />
+      {/* moon + stars */}
+      <path d="M322 62a34 34 0 1 0 24 58A28 28 0 0 1 322 62Z" fill="#f5efe6" fillOpacity="0.9" />
+      <circle cx="272" cy="58" r="1.4" fill="#f5efe6" fillOpacity="0.7" />
+      <circle cx="356" cy="160" r="1.1" fill="#f5efe6" fillOpacity="0.6" />
+      <circle cx="58" cy="96" r="1.2" fill="#f5efe6" fillOpacity="0.5" />
+      {/* steam */}
+      <g stroke="#e2a273" strokeWidth={1.2} strokeLinecap="round" fill="none" opacity="0.85">
+        <path d="M150 150 c-14 -18 14 -26 0 -44 s14 -26 0 -44" />
+        <path d="M185 140 c-14 -18 14 -26 0 -44 s14 -26 0 -44 s14 -20 4 -34" />
+        <path d="M220 150 c-14 -18 14 -26 0 -44 s14 -26 0 -44" />
+      </g>
+      {/* shadow on the surface */}
+      <ellipse cx="205" cy="432" rx="175" ry="16" fill="#000" fillOpacity="0.28" />
+      {/* box */}
+      <g transform="translate(-30 26)">
+        <path d="M290 150 L326 132 L326 380 L290 398 Z" fill="#d9c8b6" {...LINE} strokeOpacity={0.5} />
+        <path d="M90 150 L126 132 L326 132 L290 150 Z" fill="#ece1d3" {...LINE} strokeOpacity={0.5} />
+        <rect x="90" y="150" width="200" height="248" fill="#f5efe6" {...LINE} />
+        <path d="M90 186 H290" {...LINE} strokeOpacity={0.25} />
+        <Mask x={130} y={226} scale={0.6} fill="#ead9cc" />
+        <Wordmark x={190} y={318} size={18} spacing={6} sub="STEAM EYE MASK" />
+      </g>
+      {/* sachet leaning in front */}
+      <g transform="rotate(9 300 360)">
+        <rect x="262" y="286" width="96" height="140" fill="#efe4d6" {...LINE} />
+        <path d="M262 296 H358 M262 416 H358" {...LINE} strokeOpacity={0.3} strokeDasharray="3 3" />
+        <Mask x={282} y={326} scale={0.28} fill="#ead9cc" stitch={false} />
+        <text x="310" y="372" textAnchor="middle" fontSize="7" letterSpacing="3" fill={INK} style={{ fontFamily: "var(--font-serif)" }}>
+          AURELLE
+        </text>
+      </g>
+    </g>
+  ),
   steps: null,
 };
 
 const tones = {
-  ivory: "linear-gradient(165deg, #f3eee6 0%, #e9e1d6 100%)",
-  sand: "linear-gradient(165deg, #ece4d9 0%, #ddd2c3 100%)",
-  rose: "linear-gradient(165deg, #f1e7e0 0%, #e3d5cb 100%)",
+  ivory: "linear-gradient(165deg, #f3ebe0 0%, #e7dccd 100%)",
+  sand: "linear-gradient(165deg, #ebdfd0 0%, #dccbb7 100%)",
+  rose: "linear-gradient(165deg, #f0e2d7 0%, #e2cdbf 100%)",
+  plum: "linear-gradient(170deg, #45303a 0%, #2a1c22 100%)",
 };
 
 export type PlaceholderTone = keyof typeof tones;
+const DARK_TONES: PlaceholderTone[] = ["plum"];
 
 interface Props {
   motif: PlaceholderMotif;
@@ -138,14 +184,17 @@ interface Props {
 }
 
 export function PlaceholderArt({ motif, brief, tone = "ivory", compact = false, captionPosition = "bottom", className = "" }: Props) {
+  const dark = DARK_TONES.includes(tone);
   return (
-    <div className={`relative h-full w-full overflow-hidden ${className}`} style={{ background: tones[tone] }}>
+    <div className={`relative h-full w-full overflow-hidden ${dark ? "theme-dark" : ""} ${className}`} style={{ background: tones[tone] }}>
       <div className="grain absolute inset-0" aria-hidden />
-      <div
-        className="absolute inset-0"
-        aria-hidden
-        style={{ background: "radial-gradient(120% 80% at 18% 8%, rgba(255,255,255,.55), transparent 55%)" }}
-      />
+      {!dark && (
+        <div
+          className="absolute inset-0"
+          aria-hidden
+          style={{ background: "radial-gradient(120% 80% at 18% 8%, rgba(255,255,255,.55), transparent 55%)" }}
+        />
+      )}
       <svg
         viewBox="0 0 400 500"
         preserveAspectRatio="xMidYMid meet"

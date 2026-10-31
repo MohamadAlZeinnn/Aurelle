@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { navigation, siteConfig } from "@/data/site-config";
-import { InstagramIcon, TikTokIcon } from "@/components/ui/SocialIcons";
+import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
+import { generalEnquiryUrl } from "@/lib/whatsapp";
 
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-linen text-ink">
+    <footer className="theme-dark !bg-plum-deep">
       <div className="container-site pt-20 pb-10 md:pt-28">
         <div className="grid gap-14 md:grid-cols-12">
           <div className="md:col-span-5">
@@ -46,8 +47,13 @@ export function Footer() {
           </nav>
 
           <div className="md:col-span-2">
-            <p className="eyebrow mb-6">Follow</p>
+            <p className="eyebrow mb-6">Connect</p>
             <ul className="space-y-3 text-[0.95rem]">
+              <li>
+                <a href={generalEnquiryUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-stone hover:text-ink">
+                  <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+                </a>
+              </li>
               <li>
                 <a href={siteConfig.social.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 text-stone hover:text-ink">
                   <InstagramIcon className="h-4 w-4" /> Instagram

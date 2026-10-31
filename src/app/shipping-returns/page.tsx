@@ -25,7 +25,8 @@ export default function ShippingReturnsPage() {
     ],
     ["Complimentary delivery", threshold ? `On orders above ${threshold}` : "—"],
     ["Delivery time", deliveryEstimate ?? <em key="eta">To be confirmed</em>],
-    ["Payment", siteConfig.payments.cashOnDelivery ? "Cash on Delivery (USD)" : "Shown at checkout"],
+    ["How to order", `On WhatsApp — ${siteConfig.ordering.whatsappDisplay}`],
+    ["Payment", siteConfig.payments.cashOnDelivery ? "Cash on Delivery (USD)" : "Confirmed on WhatsApp"],
   ];
 
   return (
@@ -46,7 +47,7 @@ export default function ShippingReturnsPage() {
             ))}
           </dl>
           <div className="prose-aurelle mt-6">
-            <p>Our delivery partner will contact you by phone before arriving, so please make sure the number you enter at checkout is reachable.</p>
+            <p>Our delivery partner will contact you by phone before arriving, so please make sure the number you message us from is reachable.</p>
           </div>
 
           <h2 className="mt-16 font-serif text-3xl">Returns</h2>

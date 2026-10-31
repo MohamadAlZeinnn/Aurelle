@@ -12,7 +12,7 @@ export function LifestyleSection() {
           src={lifestyle.src}
           alt={lifestyle.alt}
           motif={lifestyle.motif}
-          brief={lifestyle.brief}
+          brief={lifestyle.brief} isPlaceholder={lifestyle.isPlaceholder} focus={lifestyle.focus} fit={lifestyle.fit}
           tone="sand"
           sizes="100vw"
           captionPosition="top"
@@ -40,7 +40,7 @@ export function LifestyleSection() {
                 src={lifestyleDetail.src}
                 alt={lifestyleDetail.alt}
                 motif={lifestyleDetail.motif}
-                brief={lifestyleDetail.brief}
+                brief={lifestyleDetail.brief} isPlaceholder={lifestyleDetail.isPlaceholder} focus={lifestyleDetail.focus} fit={lifestyleDetail.fit}
                 compact
                 sizes="25vw"
                 className="absolute inset-0"

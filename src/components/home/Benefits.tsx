@@ -44,7 +44,7 @@ const benefits = [
 
 export function Benefits() {
   return (
-    <section aria-labelledby="benefits-title" className="bg-linen py-[var(--spacing-section)]">
+    <section aria-labelledby="benefits-title" className="theme-dark py-[var(--spacing-section)]">
       <div className="container-site">
         <Reveal>
           <SectionHeading eyebrow="Why AURELLE" title={<span id="benefits-title">Small Ritual. Softer Moments.</span>} />

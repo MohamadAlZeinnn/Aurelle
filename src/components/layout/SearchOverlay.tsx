@@ -79,13 +79,14 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                               src={p.images[0].src}
                               alt={p.images[0].alt}
                               motif={p.images[0].motif}
-                              brief={p.images[0].brief}
+                              brief={p.images[0].brief} isPlaceholder={p.images[0].isPlaceholder} focus={p.images[0].focus} fit={p.images[0].fit}
                               sizes="96px"
                               compact
                               className="aspect-[4/5] w-20 shrink-0"
                             />
                             <div>
                               <p className="font-serif text-xl group-hover:text-clay">{p.name}</p>
+                              {p.pack && <p className="text-xs text-stone">{p.pack.label}</p>}
                               <Price amount={price.amount} isPlaceholder={price.isPlaceholder} className="mt-1 text-sm text-stone" />
                             </div>
                             <ArrowRight className="ml-auto h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" strokeWidth={1.25} />

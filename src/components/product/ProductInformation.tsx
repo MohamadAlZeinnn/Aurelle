@@ -5,8 +5,9 @@ import { siteConfig } from "@/data/site-config";
 import { PurchaseControls } from "@/components/product/PurchaseControls";
 import { freeDeliveryLabel } from "@/components/ui/primitives";
 import { formatUSD } from "@/lib/currency";
+import { whatsappUrl } from "@/lib/whatsapp";
 
-export function ProductInformation({ product, paymentLabels }: { product: Product; paymentLabels: string[] }) {
+export function ProductInformation({ product }: { product: Product }) {
   const { deliveryFee, deliveryEstimate } = siteConfig.shipping;
   const threshold = freeDeliveryLabel();
 
@@ -28,6 +29,7 @@ export function ProductInformation({ product, paymentLabels }: { product: Produc
 
       <p className="eyebrow mt-10">{product.brand}</p>
       <h1 className="mt-4 text-headline font-light">{product.name}</h1>
+      {product.pack && <p className="mt-3 font-serif text-xl text-stone italic">{product.pack.label} masks</p>}
       <p className="mt-6 max-w-md text-[1.05rem] leading-relaxed text-stone">{product.shortDescription}</p>
 
       <div className="mt-10 border-t border-ink/12 pt-8" id="purchase">
@@ -48,9 +50,13 @@ export function ProductInformation({ product, paymentLabels }: { product: Produc
         <li className="flex gap-4 py-5">
           <Banknote className="mt-0.5 h-[18px] w-[18px] shrink-0 text-clay" strokeWidth={1.25} aria-hidden />
           <div>
-            <p className="text-ink">Payment</p>
+            <p className="text-ink">Order on WhatsApp · Pay on delivery</p>
             <p className="mt-1 text-stone">
-              {paymentLabels.length ? paymentLabels.join(" · ") : "Payment options are shown at checkout."} — prices in USD.
+              Send us your order on WhatsApp at{" "}
+              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap text-ink underline underline-offset-4">
+                {siteConfig.ordering.whatsappDisplay}
+              </a>
+              . We confirm the details with you, then you pay cash on delivery — prices in USD.
             </p>
           </div>
         </li>

@@ -10,7 +10,7 @@ export function BrandPhilosophy() {
       <div className="container-site grid items-center gap-14 md:grid-cols-12 md:gap-8">
         <div className="md:col-span-5">
           <ImageReveal className="aspect-[4/5]">
-            <EditorialImage src={image.src} alt={image.alt} motif={image.motif} brief={image.brief} sizes="(min-width: 768px) 40vw, 100vw" className="h-full w-full" />
+            <EditorialImage src={image.src} alt={image.alt} motif={image.motif} brief={image.brief} isPlaceholder={image.isPlaceholder} focus={image.focus} fit={image.fit} sizes="(min-width: 768px) 40vw, 100vw" className="h-full w-full" />
           </ImageReveal>
         </div>
         <Reveal className="md:col-span-6 md:col-start-7">

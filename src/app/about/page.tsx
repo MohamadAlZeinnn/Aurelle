@@ -35,7 +35,7 @@ export default function AboutPage() {
           </Reveal>
         </div>
         <ImageReveal className="mt-16 h-[60svh] min-h-[380px] md:mt-24 md:h-[80svh]">
-          <EditorialImage src={image.src} alt={image.alt} motif={image.motif} brief={image.brief} tone="rose" sizes="100vw" className="h-full w-full" />
+          <EditorialImage src={image.src} alt={image.alt} motif={image.motif} brief={image.brief} isPlaceholder={image.isPlaceholder} focus={image.focus} fit={image.fit} tone="plum" sizes="100vw" className="h-full w-full" />
         </ImageReveal>
       </section>
 

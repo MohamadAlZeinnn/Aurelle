@@ -45,15 +45,23 @@ export const siteConfig = {
   payments: {
     /** Cash on Delivery. */
     cashOnDelivery: true,
-    /** Online card payment is only offered when a provider is configured server-side (see src/lib/payments). */
+  },
+
+  /**
+   * All orders are placed on WhatsApp: "Order" buttons open a chat with a
+   * pre-filled message (product, quantity) — there is no cart or checkout.
+   */
+  ordering: {
+    whatsapp: "+96176831948",
+    /** Shown as the display version of the number. */
+    whatsappDisplay: "+961 76 831 948",
   },
 
   contact: {
     email: "hello@aurelle.example" as string,
-    /** WhatsApp / phone in international format, or null. */
-    phone: null as string | null,
-    hours: null as string | null,
+    /** Applies to `email` only — the WhatsApp number above is confirmed. */
     isPlaceholder: true,
+    hours: null as string | null,
   },
 
   social: {

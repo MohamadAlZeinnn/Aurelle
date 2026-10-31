@@ -13,7 +13,7 @@ import type { Product } from "@/types/product";
  *   clearly labelled placeholder.
  *
  * To add a product later, append another object — listing, product pages,
- * cart, checkout, sitemap and structured data all read from this array.
+ * WhatsApp ordering, search, sitemap and structured data all read from this array.
  */
 export const products: Product[] = [
   {
@@ -29,47 +29,39 @@ export const products: Product[] = [
       "Take a moment away from the noise of everyday life.",
       "The AURELLE Steam Eye Mask transforms a simple pause into a comforting self-care ritual. Designed for moments when you need to slow down, relax, and give yourself a little time.",
     ],
-    price: { amount: 15, isPlaceholder: true },
+    // Confirmed retail price: one box of 5 masks.
+    price: { amount: 12, isPlaceholder: false },
+    pack: { label: "Box of 5", units: 5, unitName: "mask" },
     availability: "in_stock",
     maxPerOrder: 10,
     // Add scents or pack sizes here once confirmed, e.g.
     // { id: "lavender", name: "Lavender", available: true }
     variants: [],
     images: [
+      // Stand-in photos (isPlaceholder) cropped from supplier imagery until AURELLE photography is shot.
+      // Add close-up, in-use and box-contents shots here as they become available.
       {
         id: "packaging",
         kind: "packaging",
         motif: "box",
-        alt: "AURELLE Steam Eye Mask packaging",
+        src: "/images/placeholders/steam-eye-mask/packaging.jpg",
+        width: 1200,
+        height: 1500,
+        isPlaceholder: true,
+        fit: "contain",
+        alt: "Steam Eye Mask single-use sachet with a closed-eye illustration",
         brief: "Main packaging photograph — box front on warm ivory linen, soft daylight",
-      },
-      {
-        id: "closeup",
-        kind: "closeup",
-        motif: "mask",
-        alt: "Close-up of the AURELLE Steam Eye Mask",
-        brief: "Close-up of the eye mask — fabric texture, ear loops, natural shadow",
       },
       {
         id: "lifestyle",
         kind: "lifestyle",
         motif: "portrait",
-        alt: "A woman relaxing while wearing the AURELLE Steam Eye Mask",
+        src: "/images/placeholders/steam-eye-mask/lifestyle.jpg",
+        width: 1200,
+        height: 1500,
+        isPlaceholder: true,
+        alt: "A woman relaxing against a soft knit throw while wearing the steam eye mask",
         brief: "Lifestyle — woman wearing the mask, reclined on cream bedding, natural light",
-      },
-      {
-        id: "in-use",
-        kind: "in-use",
-        motif: "still",
-        alt: "The AURELLE Steam Eye Mask being opened as part of an evening ritual",
-        brief: "Product in use — hands opening the sachet beside a bedside ritual setting",
-      },
-      {
-        id: "contents",
-        kind: "contents",
-        motif: "sachet",
-        alt: "AURELLE Steam Eye Mask box and individual sachets",
-        brief: "Packaging & contents — box with individual sachets laid out flat",
       },
     ],
     specifications: {
@@ -81,7 +73,7 @@ export const products: Product[] = [
       reusability: null,
       dailyUse: null,
       sensitiveSkin: null,
-      contents: null,
+      contents: "Box of 5 steam eye masks",
     },
     active: true,
     seo: {

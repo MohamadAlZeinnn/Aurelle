@@ -12,7 +12,7 @@ export interface ConfigurableAmount {
 export type ImageKind = "packaging" | "closeup" | "lifestyle" | "in-use" | "contents";
 
 /** Visual motif used by the art-directed placeholder until photography is supplied. */
-export type PlaceholderMotif = "portrait" | "mask" | "sachet" | "box" | "still" | "steps";
+export type PlaceholderMotif = "portrait" | "mask" | "sachet" | "box" | "still" | "ritual" | "steps";
 
 export interface ProductImage {
   id: string;
@@ -22,6 +22,12 @@ export interface ProductImage {
   src?: string;
   width?: number;
   height?: number;
+  /** `src` is a stand-in photo (not final AURELLE photography): shown with a tag and left out of structured data. */
+  isPlaceholder?: boolean;
+  /** CSS object-position for the photo's focal point, e.g. "50% 35%". */
+  focus?: string;
+  /** "contain" frames a small/low-resolution photo on a backdrop instead of stretching it edge to edge. */
+  fit?: "cover" | "contain";
   /** Brief for the photographer — shown on the placeholder so it is clearly marked for replacement. */
   brief: string;
   motif: PlaceholderMotif;
@@ -68,6 +74,8 @@ export interface Product {
   /** Storytelling paragraphs on the product page. */
   story: string[];
   price: ConfigurableAmount;
+  /** What one unit of `price` buys, e.g. a box of 5 masks. */
+  pack?: { label: string; units: number; unitName: string };
   availability: Availability;
   maxPerOrder: number;
   variants: ProductVariant[];

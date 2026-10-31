@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/data/site-config";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { PlaceholderTag } from "@/components/ui/primitives";
-import { InstagramIcon, TikTokIcon } from "@/components/ui/SocialIcons";
+import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
+import { generalEnquiryUrl } from "@/lib/whatsapp";
 import { ContactForm } from "@/components/contact/ContactForm";
 
 export const metadata: Metadata = {
@@ -27,14 +28,18 @@ export default function ContactPage() {
                 {contact.email}
               </a>
             </div>
-            {contact.phone && (
-              <div>
-                <p className="eyebrow mb-3">Phone / WhatsApp</p>
-                <a href={`tel:${contact.phone}`} className="font-serif text-2xl hover:text-clay">
-                  {contact.phone}
-                </a>
-              </div>
-            )}
+            <div>
+              <p className="eyebrow mb-3">WhatsApp · Orders &amp; questions</p>
+              <a
+                href={generalEnquiryUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 font-serif text-2xl hover:text-clay"
+              >
+                <WhatsAppIcon className="h-5 w-5" /> {siteConfig.ordering.whatsappDisplay}
+              </a>
+              <p className="mt-2 text-sm text-stone">The quickest way to reach us — all orders are placed here.</p>
+            </div>
             {contact.hours && (
               <div>
                 <p className="eyebrow mb-3">Hours</p>

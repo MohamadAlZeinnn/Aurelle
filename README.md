@@ -16,19 +16,25 @@ npm run lint                  # type-check
 | What | File |
 | --- | --- |
 | Product data (price, variants, images, manufacturer specs) | `src/data/products.ts` |
-| Store config (announcements, delivery fee, free-delivery threshold, LBP rate, COD, contact, socials) | `src/data/site-config.ts` |
+| Store config (WhatsApp number, announcements, delivery fee, free-delivery threshold, LBP rate, COD, contact, socials) | `src/data/site-config.ts` |
+| WhatsApp links & pre-filled order message | `src/lib/whatsapp.ts` |
 | FAQ copy | `src/data/faq.ts` |
 | Editorial (non-product) imagery | `src/data/editorial.ts` |
 | Policy page templates | `src/data/policies.tsx` |
 | Design tokens (colours, type scale, spacing, motion) | `src/app/globals.css` (`@theme`) |
-| Pricing — shared by browser and server | `src/lib/pricing.ts` |
-| Validation (checkout, Lebanese phone numbers, newsletter, contact) | `src/lib/validation.ts` |
-| Order API (server-side validation + price recomputation) | `src/app/api/orders/route.ts` |
-| Payment provider architecture | `src/lib/server/payments.ts` |
-| Database schema | `supabase/schema.sql` |
+| Validation (newsletter, contact) | `src/lib/validation.ts` |
+| Database schema (newsletter, contact messages) | `supabase/schema.sql` |
 
 Adding a product = appending to `products` in `src/data/products.ts`. The shop page, product
-route, cart, checkout, search, sitemap and structured data all read from it.
+route, WhatsApp order message, search, sitemap and structured data all read from it.
+
+## Ordering
+
+All orders are placed on **WhatsApp** (`siteConfig.ordering.whatsapp`). There is no cart or
+checkout: "Order on WhatsApp" buttons open a chat with the product, quantity (and scent, if
+configured) pre-filled, plus prompts for name and address. The price is only included in the
+message once it is no longer a placeholder. Payment is cash on delivery. Old `/cart` and
+`/checkout` URLs redirect to the product page.
 
 ## Content honesty rules built in
 
@@ -36,26 +42,20 @@ route, cart, checkout, search, sitemap and structured data all read from it.
   renders as "to be confirmed" — on the product page and in the FAQ.
 - **Placeholders are visible.** Prices and fees with `isPlaceholder: true` show a dashed
   `PLACEHOLDER` tag; images without `src` render an illustrated stand-in labelled
-  *Photography placeholder* with the shot brief.
+  *Photography placeholder* with the shot brief; stand-in photos (`isPlaceholder` on an image
+  with `src`) show a *Placeholder image* tag and are left out of structured data.
 - **No fake reviews/ratings.** None are rendered or emitted in structured data. Product JSON-LD
   omits `offers` while the price is a placeholder.
-- **No simulated orders.** See below.
 
-## Demo vs. live checkout
+The newsletter and contact forms store submissions only when `SUPABASE_URL` and
+`SUPABASE_SERVICE_ROLE_KEY` are set (run `supabase/schema.sql` first); otherwise they run in a
+clearly labelled demo mode and nothing is recorded.
 
-Checkout is **live** only when **both** are true:
+## Images
 
-1. `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are set (run `supabase/schema.sql` first), and
-2. no price or delivery fee is still flagged `isPlaceholder`.
-
-Otherwise it runs in clearly labelled **demo mode**: the form is fully validated on the server,
-but nothing is recorded, no payment is taken and the bag is kept. The newsletter and contact
-forms follow the same rule.
-
-Cash on Delivery is toggled in `site-config.ts`. Online card payment appears only once a
-`PaymentProvider` adapter (e.g. Areeba / MPGS) is implemented and registered in
-`src/lib/server/payments.ts`, and `PAYMENT_PROVIDER` + credentials are set. Orders paid by
-card are stored as `awaiting_payment` and must be confirmed by the provider's webhook only.
+Current product and hero photos in `public/images/placeholders/` are stand-ins cropped from
+supplier imagery (1024px source, upscaled to 1200px). Replace them with original AURELLE
+photography at **≥ 2000px on the long edge** for crisp results on large and retina screens.
 
 ## Launch checklist
 
@@ -63,8 +63,8 @@ card are stored as `awaiting_payment` and must be confirmed by the provider's we
 - [ ] Delivery fee, free-delivery threshold, delivery estimate, returns window → `site-config.ts`
 - [ ] Manufacturer specifications (features, how to use, materials, safety, wear duration, reusability, daily use, sensitive skin, contents) → `products.ts`
 - [ ] "How does it work?" answer → `faq.ts`
-- [ ] Product photography (5 images) + editorial photography → set `src` in `products.ts` / `editorial.ts`
-- [ ] Contact email/phone, Instagram & TikTok URLs → `site-config.ts` (set `contact.isPlaceholder: false`)
+- [ ] Product photography (5 images) + editorial photography → set `src` in `products.ts` / `editorial.ts`, remove `isPlaceholder`
+- [ ] Contact email, Instagram & TikTok URLs → `site-config.ts` (set `contact.isPlaceholder: false`)
 - [ ] Policies reviewed by a legal adviser; set `isDraft: false` → `policies.tsx`
-- [ ] Supabase project + env vars; `NEXT_PUBLIC_SITE_URL` set to the production domain
-- [ ] Optional: LBP indicative rate (`currency.lbpRate`), card payment provider
+- [ ] Supabase project + env vars (newsletter/contact); `NEXT_PUBLIC_SITE_URL` set to the production domain
+- [ ] Optional: LBP indicative rate (`currency.lbpRate`)

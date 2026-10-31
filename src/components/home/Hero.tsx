@@ -26,7 +26,7 @@ export function Hero() {
             A Softer Way
           </motion.span>
           <motion.span className="block" {...rise(0.42)}>
-            to <em className="font-light">Unwind.</em>
+            to <em className="font-light text-clay">Unwind.</em>
           </motion.span>
         </h1>
         <motion.p className="mt-8 max-w-[30rem] text-base leading-relaxed text-stone md:text-[1.05rem]" {...rise(0.6)}>
@@ -70,8 +70,8 @@ export function Hero() {
             src={image.src}
             alt={image.alt}
             motif={image.motif}
-            brief={image.brief}
-            tone="rose"
+            brief={image.brief} isPlaceholder={image.isPlaceholder} focus={image.focus} fit={image.fit}
+            tone="plum"
             priority
             sizes="(min-width: 1024px) 58vw, 100vw"
             className="h-full w-full"

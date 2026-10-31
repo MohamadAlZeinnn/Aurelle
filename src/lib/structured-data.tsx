@@ -30,7 +30,7 @@ export function organizationJsonLd() {
  */
 export function productJsonLd(product: Product) {
   const url = `${siteConfig.url}${productHref(product)}`;
-  const images = product.images.filter((i) => i.src).map((i) => `${siteConfig.url}${i.src}`);
+  const images = product.images.filter((i) => i.src && !i.isPlaceholder).map((i) => `${siteConfig.url}${i.src}`);
   return {
     "@context": "https://schema.org",
     "@type": "Product",

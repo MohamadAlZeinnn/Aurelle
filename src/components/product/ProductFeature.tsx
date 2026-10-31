@@ -23,7 +23,7 @@ export function ProductFeature({ product, index = 0 }: { product: Product; index
               src={main.src}
               alt={main.alt}
               motif={main.motif}
-              brief={main.brief}
+              brief={main.brief} isPlaceholder={main.isPlaceholder} focus={main.focus} fit={main.fit}
               tone="sand"
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="h-full w-full"
@@ -33,7 +33,7 @@ export function ProductFeature({ product, index = 0 }: { product: Product; index
         {detail && (
           <div className="absolute right-0 bottom-[-8%] hidden w-[38%] border-[10px] border-ivory lg:block">
             <ImageReveal className="aspect-square" delay={0.25}>
-              <EditorialImage src={detail.src} alt={detail.alt} motif={detail.motif} brief={detail.brief} compact sizes="20vw" className="h-full w-full" />
+              <EditorialImage src={detail.src} alt={detail.alt} motif={detail.motif} brief={detail.brief} isPlaceholder={detail.isPlaceholder} focus={detail.focus} fit={detail.fit} compact sizes="20vw" className="h-full w-full" />
             </ImageReveal>
           </div>
         )}

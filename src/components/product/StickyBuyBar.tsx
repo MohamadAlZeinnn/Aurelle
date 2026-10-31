@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCart } from "@/components/cart/CartProvider";
 import { Price } from "@/components/ui/primitives";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { getProductById, isPurchasable, resolvePrice } from "@/lib/product";
+import { orderMessage, whatsappUrl } from "@/lib/whatsapp";
 
-/** Mobile-only bar that appears once the main purchase controls scroll out of view. */
+/** Mobile-only bar that appears once the main order controls scroll out of view. */
 export function StickyBuyBar({ productId, watchId = "purchase" }: { productId: string; watchId?: string }) {
   const product = getProductById(productId)!;
-  const { add, isOpen } = useCart();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -26,11 +26,12 @@ export function StickyBuyBar({ productId, watchId = "purchase" }: { productId: s
   // Products with variants need a selection — send those customers back to the selector instead.
   const needsChoice = product.variants.length > 0;
   const price = resolvePrice(product);
-  const purchasable = isPurchasable(product);
+
+  if (!isPurchasable(product)) return null;
 
   return (
     <AnimatePresence>
-      {visible && !isOpen && (
+      {visible && (
         <motion.div
           className="fixed inset-x-0 bottom-0 z-30 border-t border-ink/10 bg-ivory/95 px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
           initial={{ y: "100%" }}
@@ -40,21 +41,31 @@ export function StickyBuyBar({ productId, watchId = "purchase" }: { productId: s
         >
           <div className="flex items-center gap-4">
             <div className="min-w-0 flex-1">
-              <p className="truncate font-serif text-lg leading-tight">{product.name}</p>
+              <p className="truncate font-serif text-lg leading-tight">
+                {product.name}
+                {product.pack && <span className="ml-2 font-sans text-xs text-stone">{product.pack.label}</span>}
+              </p>
               <Price amount={price.amount} isPlaceholder={price.isPlaceholder} showLbp={false} className="text-sm text-stone" />
             </div>
-            <button
-              type="button"
-              className="btn btn-primary !min-h-11 !px-6"
-              disabled={!purchasable}
-              onClick={() =>
-                needsChoice
-                  ? document.getElementById(watchId)?.scrollIntoView({ behavior: "smooth", block: "center" })
-                  : add(product.id, 1)
-              }
-            >
-              {needsChoice ? "Choose" : "Add to Bag"}
-            </button>
+            {needsChoice ? (
+              <button
+                type="button"
+                className="btn btn-primary !min-h-11 !px-6"
+                onClick={() => document.getElementById(watchId)?.scrollIntoView({ behavior: "smooth", block: "center" })}
+              >
+                Choose
+              </button>
+            ) : (
+              <a
+                href={whatsappUrl(orderMessage(product, 1))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary !min-h-11 !px-5"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> Order
+                <span className="sr-only">on WhatsApp (opens WhatsApp)</span>
+              </a>
+            )}
           </div>
         </motion.div>
       )}

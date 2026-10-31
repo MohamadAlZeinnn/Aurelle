@@ -2,18 +2,20 @@
 
 /* ───────────────────────── AURELLE design tokens ───────────────────────── */
 @theme {
-  /* Palette */
-  --color-ivory: #f8f6f1;   /* primary background */
-  --color-linen: #eeeae3;   /* secondary background */
-  --color-sand: #e4dcd0;    /* soft beige */
-  --color-taupe: #a99b8a;   /* decorative lines, icons */
-  --color-ink: #292824;     /* primary text */
-  --color-stone: #6b675f;   /* secondary text (#77736B darkened slightly for AA contrast) */
-  --color-blush: #b99f8d;   /* accent — decorative only */
-  --color-clay: #7a6455;    /* accent text (eyebrows, links) — AA on ivory */
-  --color-rose: #e9dcd3;    /* dusty rose wash */
+  /* Palette — "Evening Ritual": warm cream base, deep plum-cocoa signature, candlelight amber */
+  --color-ivory: #f5efe6;   /* primary background (cream) */
+  --color-linen: #ede4d8;   /* secondary background */
+  --color-sand: #e2d5c5;    /* soft beige */
+  --color-taupe: #a8917f;   /* decorative lines, icons */
+  --color-ink: #241c1f;     /* primary text */
+  --color-stone: #5e5257;   /* secondary text — AA+ on cream */
+  --color-clay: #985832;    /* accent text (eyebrows, links) — burnt amber, AA on cream */
+  --color-amber: #c27a4a;   /* candlelight accent — decorative / large text */
+  --color-plum: #3a2730;    /* signature surface */
+  --color-plum-deep: #2a1c22; /* footer / deepest surface */
+  --color-rose: #ead9cc;    /* warm blush wash */
   --color-white: #ffffff;
-  --color-error: #9b3d32;
+  --color-error: #a23b2c;
 
   /* Typography */
   --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
@@ -86,6 +88,25 @@
   padding-inline: var(--spacing-gutter);
 }
 
+/*
+ * Dark plum surface. Remaps the palette tokens for everything inside, so the
+ * same components (text-ink, text-stone, eyebrow, btn-primary, borders…)
+ * render as cream-on-plum without dark-specific variants.
+ */
+@utility theme-dark {
+  --color-ink: #f5efe6;
+  --color-stone: #cdbdb3;
+  --color-clay: #e2a273;
+  --color-taupe: #8e7480;
+  --color-ivory: #3a2730;
+  --color-linen: #3a2730;
+  --color-sand: #4a3540;
+  --color-rose: #4a3540;
+  --color-error: #f0a08e;
+  background-color: #3a2730;
+  color: #f5efe6;
+}
+
 /* ───────────────────────── Components ───────────────────────── */
 @layer components {
 
@@ -131,7 +152,8 @@
     color: var(--color-ivory);
     border: 1px solid var(--color-ink);
   }
-  .btn-primary:not(:disabled):hover { background: #3d3b35; border-color: #3d3b35; }
+  .btn-primary:not(:disabled):hover { background: var(--color-plum); border-color: var(--color-plum); }
+  .theme-dark .btn-primary:not(:disabled):hover { background: var(--color-amber); border-color: var(--color-amber); color: var(--color-plum-deep); }
   .btn-secondary {
     background: transparent;
     color: var(--color-ink);

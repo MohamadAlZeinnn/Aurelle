@@ -5,7 +5,6 @@ import { Providers } from "@/components/layout/Providers";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { CartDrawer } from "@/components/cart/CartDrawer";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -40,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f8f6f1",
+  themeColor: "#f5efe6",
   width: "device-width",
   initialScale: 1,
 };
@@ -60,7 +59,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <main id="main">{children}</main>
           <Footer />
-          <CartDrawer />
         </Providers>
       </body>
     </html>

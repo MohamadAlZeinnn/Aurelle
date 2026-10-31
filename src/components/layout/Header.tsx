@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, ShoppingBag } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { navigation } from "@/data/site-config";
-import { useCart } from "@/components/cart/CartProvider";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
+import { WhatsAppIcon } from "@/components/ui/SocialIcons";
+import { generalEnquiryUrl } from "@/lib/whatsapp";
 
 export function Header() {
   const pathname = usePathname();
-  const { count, hydrated, open: openCart } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -63,24 +63,16 @@ export function Header() {
             <button type="button" className="p-2 transition-colors hover:text-clay" aria-label="Search" onClick={() => setSearchOpen(true)}>
               <Search className="h-[18px] w-[18px]" strokeWidth={1.25} />
             </button>
-            <button
-              type="button"
-              className="relative -mr-2 flex items-center gap-2 p-2 transition-colors hover:text-clay"
-              onClick={openCart}
-              aria-label={`Shopping bag, ${hydrated ? count : 0} ${count === 1 ? "item" : "items"}`}
+            <a
+              href={generalEnquiryUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-mr-2 flex items-center gap-2 p-2 transition-colors hover:text-clay"
+              aria-label="Order or ask a question on WhatsApp (opens WhatsApp)"
             >
-              <ShoppingBag className="h-[18px] w-[18px]" strokeWidth={1.25} />
-              <span className="hidden text-xs tracking-[0.16em] uppercase md:inline">Bag</span>
-              <span
-                aria-hidden
-                className={`flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-ink px-1 text-[10px] text-ivory tabular-nums transition-all duration-500 md:static md:bg-transparent md:p-0 md:text-xs md:text-ink ${
-                  hydrated && count > 0 ? "absolute top-0.5 right-0 scale-100 opacity-100" : "absolute top-0.5 right-0 scale-50 opacity-0 md:scale-100 md:opacity-100"
-                }`}
-              >
-                <span className="md:hidden">{hydrated ? count : 0}</span>
-                <span className="hidden md:inline">({hydrated ? count : 0})</span>
-              </span>
-            </button>
+              <WhatsAppIcon className="h-[18px] w-[18px]" />
+              <span className="hidden text-xs tracking-[0.16em] uppercase md:inline">Order</span>
+            </a>
           </div>
         </div>
       </header>
